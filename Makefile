@@ -6,40 +6,56 @@
 #    By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/04 11:59:35 by bebrandt          #+#    #+#              #
-#    Updated: 2024/03/04 12:47:55 by bebrandt         ###   ########.fr        #
+#    Updated: 2024/03/04 14:21:55 by bebrandt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=
+SERVER_NAME		=	server
 
-SRCS_DIR	=	srcs/
+CLIENT_NAME		=	client
 
-SRCS	=	$(addsuffix .c, )
+SRCS_DIR			=	srcs/
 
-OBJ 	= $(FDF_SRCS:.c=.o)
+SERVER_SRCS		=	$(addsuffix .c, server)
 
-OBJS 	= $(addprefix $(OBJ_DIR),$(FDF_OBJ))
+CLIENT_SRCS		=	$(addsuffix .c, client)
 
-LIBFT_DIR	=	libft/
+SERVER_OBJ 		= $(SERVER_SRCS:.c=.o)
 
-LIBFT_NAME	=	libft.a
+CLIENT_OBJ 		= $(CLIENT_SRCS:.c=.o)
 
-CC			=	gcc
+SERVER_OBJS 	= $(addprefix $(OBJ_DIR),$(SERVER_OBJ))
 
-CFLAGS		=	-Wall -Wextra -Werror -g
+CLIENT_OBJS 	= $(addprefix $(OBJ_DIR),$(CLIENT_OBJ))
 
-RM			=	rm -f
+LIBFT_DIR			=	libft/
 
-OBJ_DIR		=	objs/
+LIBFT_NAME		=	libft.a
+
+HDRS			=	-Iincludes/.
+
+CC						=	gcc $(HDRS)
+
+CFLAGS				=	-Wall -Wextra -Werror -g
+
+RM						=	rm -f
+
+OBJ_DIR				=	objs/
 
 
-RED			=	\033[0;31m
-GREEN		=	\033[0;32m
-NONE		=	\033[0m
+RED						=	\033[0;31m
+GREEN					=	\033[0;32m
+NONE					=	\033[0m
 
-all: $(LIBFT_DIR)$(LIBFT_NAME) $(NAME)
+all: makelib $(SERVER_NAME) $(CLIENT_NAME)
 
-$(NAME): $(FDF_OBJS)
+makelib:
+	@make -C $(LIBFT_DIR) all
+
+$(SERVER_NAME): $(LIBFT_DIR)$(LIBFT_NAME) $(SERVER_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_DIR) -lft
+
+$(CLIENT_NAME): $(LIBFT_DIR)$(LIBFT_NAME) $(CLIENT_OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_DIR) -lft
 
 $(LIBFT_DIR)$(LIBFT_NAME):
@@ -48,23 +64,20 @@ $(LIBFT_DIR)$(LIBFT_NAME):
 $(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(GREEN)##### Creating" [ $@ ] " #####$(NONE)"
-	@$(CC) $(CFLAGS) $(OS_FLAGS) -c -o $@ $< $(INCLUDES)
-
-$(MLX_LIB):
-	@make -C $(MLX_DIR)
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	@make -C $(LIBFT_DIR) clean
-	@make -C $(MLX_DIR) clean
-	@rm -f $(FDF_OBJS)
+	@rm -f $(SERVER_OBJS)
+	@rm -f $(CLIENT_OBJS)
 	@echo "$(RED)##### Removed object files #####$(NONE)"
 
 fclean: clean
 	@make -C $(LIBFT_DIR) fclean
-	@make -C $(MLX_DIR) clean
-	@rm -f $(NAME)
+	@rm -f $(SERVER_NAME)
+	@rm -f $(CLIENT_NAME)
 	@echo "$(RED)##### Removed binary files #####$(NONE)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: makelib all clean fclean re
