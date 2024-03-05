@@ -3,60 +3,57 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+         #
+#    By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/04 11:59:35 by bebrandt          #+#    #+#              #
-#    Updated: 2024/03/04 14:21:55 by bebrandt         ###   ########.fr        #
+#    Updated: 2024/03/05 16:11:31 by bebrandt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SERVER_NAME		=	server
-
-CLIENT_NAME		=	client
-
-SRCS_DIR			=	srcs/
-
 SERVER_SRCS		=	$(addsuffix .c, server)
-
-CLIENT_SRCS		=	$(addsuffix .c, client)
-
 SERVER_OBJ 		= $(SERVER_SRCS:.c=.o)
-
-CLIENT_OBJ 		= $(CLIENT_SRCS:.c=.o)
-
 SERVER_OBJS 	= $(addprefix $(OBJ_DIR),$(SERVER_OBJ))
 
+CLIENT_NAME		=	client
+CLIENT_SRCS		=	$(addsuffix .c, client)
+CLIENT_OBJ 		= $(CLIENT_SRCS:.c=.o)
 CLIENT_OBJS 	= $(addprefix $(OBJ_DIR),$(CLIENT_OBJ))
 
-LIBFT_DIR			=	libft/
+SRCS_DIR		=	srcs/
+
+LIBFT_DIR		=	libft/
 
 LIBFT_NAME		=	libft.a
 
 HDRS			=	-Iincludes/.
 
-CC						=	gcc $(HDRS)
+CC				=	gcc $(HDRS)
 
-CFLAGS				=	-Wall -Wextra -Werror -g
+CFLAGS			=	-Wall -Wextra -Werror -g
 
-RM						=	rm -f
+RM				=	rm -f
 
-OBJ_DIR				=	objs/
+OBJ_DIR			=	objs/
 
+RED				=	\033[0;31m
+GREEN			=	\033[0;32m
+NONE			=	\033[0m
 
-RED						=	\033[0;31m
-GREEN					=	\033[0;32m
-NONE					=	\033[0m
+all: makelibs 
+	@$(MAKE) $(SERVER_NAME)
+	@$(MAKE) $(CLIENT_NAME)
 
-all: makelib $(SERVER_NAME) $(CLIENT_NAME)
-
-makelib:
+makelibs:
 	@make -C $(LIBFT_DIR) all
 
 $(SERVER_NAME): $(LIBFT_DIR)$(LIBFT_NAME) $(SERVER_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_DIR) -lft
+	@$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_DIR) -lft
+	@echo "$(GREEN)##### " $@ "Program is created #####$(NONE)"
 
 $(CLIENT_NAME): $(LIBFT_DIR)$(LIBFT_NAME) $(CLIENT_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_DIR) -lft
+	@$(CC) $(CFLAGS) -o $@ $^ -L$(LIBFT_DIR) -lft
+	@echo "$(GREEN)##### " $@ "Program is created #####$(NONE)"
 
 $(LIBFT_DIR)$(LIBFT_NAME):
 	@make -C $(LIBFT_DIR) all
@@ -80,4 +77,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: makelib all clean fclean re
+.PHONY: makelibs all clean fclean re
