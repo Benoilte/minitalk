@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
+/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:23:20 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/04 13:25:07 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:43:53 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,11 @@
 
 # include "../libft/includes/libft.h"
 
+# include <unistd.h>
+# include <signal.h>
+
+// server.c
+
+// client.c
 
 #endif
