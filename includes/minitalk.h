@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:23:20 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/05 22:53:55 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/06 01:43:24 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ void	set_signal_action(void);
 void	sig_handler(int signum);
 
 // client.c
+
+void	send_char(pid_t pid, char c);
 
 #endif
