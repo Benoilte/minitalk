@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:25:46 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/05 22:39:38 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/06 01:45:13 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(int argc, char **argv)
 {
 	pid_t	pid;
 	int		i;
-	int		bit;
 	char	*str;
 
 	if (argc == 3)
@@ -28,22 +27,25 @@ int	main(int argc, char **argv)
 		i = 0;
 		while (str[i])
 		{
-			ft_printf("%c\n", str[i]);
-			bit = 0;
-			while (bit < 8)
-			{
-				ft_printf("bit[%d]: %d\n", bit, (str[i] >> (7 - bit)) & MASK);
-				if (((str[i] >> (7 - bit)) & MASK) == 0)
-					kill(ft_atoi(argv[1]), SIGUSR1);
-				else 
-					kill(ft_atoi(argv[1]), SIGUSR2);
-				bit++;
-				usleep(500);
-			}
-			i++;
+			send_char(pid, str[i++]);
 		}
 	}
 	else
 		ft_printf("Error: Wrong number of argument\n");
 	return (0);
+}
+
+void	send_char(pid_t pid, char c)
+{
+	int	bit;
+
+	bit = 0;
+	while (bit < 8)
+	{
+		if (((c >> (7 - bit++)) & MASK) == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		usleep(500);
+	}
 }
