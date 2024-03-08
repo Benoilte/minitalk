@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
+/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:08:31 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/07 14:08:50 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:24:18 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include <unistd.h>
 # include <signal.h>
+# include <time.h>
 
 # define FLAG_0 0b00000000
 # define FLAG_1 0b00000001
