@@ -6,7 +6,7 @@
 /*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:25:46 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/08 11:43:58 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:15:36 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	wait_signal_back(void)
 	i = 0;
 	while ((i < 3000000) && !g_get_signal_back)
 	{
-		i++;
-		usleep(1);
+		i += 10;
+		usleep(10);
 	}
 	if (!g_get_signal_back)
 	{
