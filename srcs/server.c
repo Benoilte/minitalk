@@ -6,11 +6,11 @@
 /*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:26:23 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/06 01:45:37 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:01:55 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minitalk.h"
+#include "../includes/server.h"
 
 t_code code;
 
@@ -31,17 +31,17 @@ void	set_signal_action(void)
 {
 	struct sigaction	act;
 
-	act.sa_flags = 0;
-	// act.sa_mask = 0;
-	act.sa_handler = 0;
-	act.sa_sigaction = 0;
-	act.sa_handler = &sig_handler;
+	act.sa_handler = NULL;
+	// act.sa_mask = NULL;
+	act.sa_flags = SA_SIGINFO;
+	act.sa_sigaction =&sig_handler;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 }
 
-void	sig_handler(int signum)
+void	sig_handler(int signum, siginfo_t *info, void *ucontext)
 {
+	(void)ucontext;
 	code.n++;
 	if (signum == SIGUSR1)
 		code.c = code.c << 1;
@@ -49,8 +49,21 @@ void	sig_handler(int signum)
 		code.c = (code.c << 1) | FLAG_1;
 	if (code.n == 8)
 	{
-		ft_printf("%c", code.c);
 		code.n = 0;
-		code.c = FLAG_0;
+		if (code.c == 0)
+		{
+			ft_printf("\n");
+			code.c = FLAG_0;
+			usleep(200);
+			kill(info->si_pid, SIGUSR2);
+			return ;
+		}
+		else
+		{
+			ft_printf("%c", code.c);
+			code.c = FLAG_0;
+		}
 	}
+	usleep(100);
+	kill(info->si_pid, SIGUSR1);
 }
