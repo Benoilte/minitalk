@@ -6,18 +6,14 @@
 /*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:26:23 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/08 11:46:10 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:20:45 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.h"
 
-t_code code;
-
 int	main(void)
 {
-	code.n = 0;
-	code.c = FLAG_0;
 	set_signal_action();
 	ft_printf("PID: %d\n", getpid());
 	while (1)
@@ -41,27 +37,30 @@ void	set_signal_action(void)
 
 void	sig_handler(int signum, siginfo_t *info, void *ucontext)
 {
+	static int	bit;
+	static char	c;
+
 	(void)ucontext;
-	code.n++;
+	bit++;
 	if (signum == SIGUSR1)
-		code.c = code.c << 1;
+		c = c << 1;
 	else if (signum == SIGUSR2)
-		code.c = (code.c << 1) | FLAG_1;
-	if (code.n == 8)
+		c = (c << 1) | FLAG_1;
+	if (bit == 8)
 	{
-		code.n = 0;
-		if (code.c == 0)
+		bit = 0;
+		if (c == 0)
 		{
 			ft_printf("\n");
-			code.c = FLAG_0;
+			c = FLAG_0;
 			usleep(100);
 			kill(info->si_pid, SIGUSR2);
 			return ;
 		}
 		else
 		{
-			ft_printf("%c", code.c);
-			code.c = FLAG_0;
+			ft_printf("%c", c);
+			c = FLAG_0;
 		}
 	}
 	usleep(100);
