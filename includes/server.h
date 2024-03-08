@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 13:23:20 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/07 14:11:21 by bebrandt         ###   ########.fr       */
+/*   Created: 2024/03/07 14:08:31 by bebrandt          #+#    #+#             */
+/*   Updated: 2024/03/07 14:08:50 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef SERVER_H
+# define SERVER_H
 
 # include "../libft/includes/libft.h"
 
@@ -32,9 +32,5 @@ typedef struct s_code
 
 void	set_signal_action(void);
 void	sig_handler(int signum, siginfo_t *info, void *ucontext);
-
-// client.c
-
-void	send_char(pid_t pid, char c);
 
 #endif
