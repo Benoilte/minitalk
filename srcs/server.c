@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
+/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:26:23 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/07 15:01:55 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/08 11:46:10 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	sig_handler(int signum, siginfo_t *info, void *ucontext)
 		{
 			ft_printf("\n");
 			code.c = FLAG_0;
-			usleep(200);
+			usleep(100);
 			kill(info->si_pid, SIGUSR2);
 			return ;
 		}
