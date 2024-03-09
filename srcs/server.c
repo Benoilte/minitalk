@@ -6,7 +6,7 @@
 /*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:26:23 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/08 16:13:44 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:16:33 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_signal_action(void)
 	struct sigaction	act;
 
 	act.sa_handler = NULL;
-	// act.sa_mask = NULL;
+	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction =&sig_handler;
 	sigaction(SIGUSR1, &act, NULL);
