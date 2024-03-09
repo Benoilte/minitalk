@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:08:31 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/08 15:15:07 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/09 09:41:27 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 void	set_signal_action(void);
 void	sig_handler(int signum, siginfo_t *info, void *ucontext);
-void	display_char(char *byte, char to_print);
+void	display_char(char to_print);
 void	set_sender_pid(pid_t s_pid);
 
 #endif
