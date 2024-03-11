@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
+/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:25:46 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/11 13:28:14 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:37:54 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,31 @@ int	main(int argc, char **argv)
 	{
 		str = argv[2];
 		pid = ft_atoi(argv[1]);
-		if (pid <= 0)
+		if ((pid <= 0) || !arg_is_digit(argv[1]))
 		{
 			ft_printf("Error: Wrong pid format\n");
 			exit (EXIT_FAILURE);
 		}
 		i = 0;
 		while (str[i])
-		{
 			send_char(pid, str[i++]);
-		}
 		send_char(pid, '\0');
 	}
 	else
 		ft_printf("Error: Wrong number of argument\n");
 	return (0);
+}
+
+void	set_signal_action(void)
+{
+	struct sigaction	act;
+
+	act.sa_handler = NULL;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = SA_SIGINFO;
+	act.sa_sigaction = &sig_handler;
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
 }
 
 void	send_char(pid_t pid, char c)
@@ -57,18 +67,6 @@ void	send_char(pid_t pid, char c)
 		wait_signal_back();
 		usleep(100);
 	}
-}
-
-void	set_signal_action(void)
-{
-	struct sigaction	act;
-
-	act.sa_handler = NULL;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = SA_SIGINFO;
-	act.sa_sigaction = &sig_handler;
-	sigaction(SIGUSR1, &act, NULL);
-	sigaction(SIGUSR2, &act, NULL);
 }
 
 void	sig_handler(int signum, siginfo_t *info, void *ucontext)
