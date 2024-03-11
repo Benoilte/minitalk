@@ -6,7 +6,7 @@
 /*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:26:23 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/09 09:41:34 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:30:00 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,29 @@ void	set_signal_action(void)
 
 void	sig_handler(int signum, siginfo_t *info, void *ucontext)
 {
-	static int	bit;
-	static char	byte;
+	static int	bit_index;
+	static char	current_char;
 
 	(void)ucontext;
 	set_sender_pid(info->si_pid);
 	if (g_sender_pid != info->si_pid)
 		return ;
 	if (signum == SIGUSR1)
-		byte = byte << 1;
+		current_char = current_char << 1;
 	else if (signum == SIGUSR2)
-		byte = (byte << 1) | FLAG_1;
-	if (++bit == 8)
+		current_char = (current_char << 1) | FLAG_1;
+	if (++bit_index == 8)
 	{
-		bit = 0;
-		if (byte == 0)
+		bit_index = 0;
+		if (current_char == 0)
 		{
 			display_char('\n');
 			kill(info->si_pid, SIGUSR2);
 			return ;
 		}
 		else
-			display_char(byte);
-		byte = FLAG_0;
+			display_char(current_char);
+		current_char = FLAG_0;
 	}
 	kill(info->si_pid, SIGUSR1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:25:46 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/08 16:15:36 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:28:14 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	set_signal_action(void)
 	struct sigaction	act;
 
 	act.sa_handler = NULL;
+	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = &sig_handler;
 	sigaction(SIGUSR1, &act, NULL);
