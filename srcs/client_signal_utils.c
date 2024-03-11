@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   client_signal_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 13:23:20 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/08 14:20:27 by bebrandt         ###   ########.fr       */
+/*   Created: 2024/03/11 14:11:05 by bebrandt          #+#    #+#             */
+/*   Updated: 2024/03/11 14:21:01 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../includes/client.h"
 
-# include "../libft/includes/libft.h"
+int	arg_is_digit(char *arg)
+{
+	int	i;
 
-# include <unistd.h>
-# include <signal.h>
-
-# define FLAG_0 0b00000000
-# define FLAG_1 0b00000001
-# define MASK   0b00000001
-
-// server.c
-
-void	set_signal_action(void);
-void	sig_handler(int signum, siginfo_t *info, void *ucontext);
-
-// client.c
-
-void	send_char(pid_t pid, char c);
-
-#endif
+	i = 0;
+	while (arg[i])
+	{
+		if (!ft_isdigit(arg[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}

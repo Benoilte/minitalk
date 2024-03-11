@@ -3,22 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
+/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:26:23 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/11 13:30:00 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:37:48 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.h"
 
-pid_t g_sender_pid;
+pid_t	g_sender_pid;
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	(void)argv;
+	if (argc != 1)
+	{
+		ft_printf("Error: Wrong number of argument\n");
+		exit (EXIT_FAILURE);
+	}
 	g_sender_pid = 0;
 	set_signal_action();
-	ft_printf("PID: %d\n", getpid());
+	ft_printf("SERVER PID: %d\n", getpid());
 	while (1)
 	{
 		pause();
@@ -33,7 +39,7 @@ void	set_signal_action(void)
 	act.sa_handler = NULL;
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = SA_SIGINFO;
-	act.sa_sigaction =&sig_handler;
+	act.sa_sigaction = &sig_handler;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 }

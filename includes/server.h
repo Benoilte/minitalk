@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bebrandt <benoit.brandt@proton.me>         +#+  +:+       +#+        */
+/*   By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:08:31 by bebrandt          #+#    #+#             */
-/*   Updated: 2024/03/09 09:41:27 by bebrandt         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:58:36 by bebrandt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 # define FLAG_0 0b00000000
 # define FLAG_1 0b00000001
-# define MASK   0b00000001
 
 // server.c
 

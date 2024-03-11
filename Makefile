@@ -6,7 +6,7 @@
 #    By: bebrandt <bebrandt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/04 11:59:35 by bebrandt          #+#    #+#              #
-#    Updated: 2024/03/05 16:11:31 by bebrandt         ###   ########.fr        #
+#    Updated: 2024/03/11 15:34:46 by bebrandt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SERVER_OBJ 		= $(SERVER_SRCS:.c=.o)
 SERVER_OBJS 	= $(addprefix $(OBJ_DIR),$(SERVER_OBJ))
 
 CLIENT_NAME		=	client
-CLIENT_SRCS		=	$(addsuffix .c, client)
+CLIENT_SRCS		=	$(addsuffix .c, client client_signal_utils)
 CLIENT_OBJ 		= $(CLIENT_SRCS:.c=.o)
 CLIENT_OBJS 	= $(addprefix $(OBJ_DIR),$(CLIENT_OBJ))
 
@@ -43,6 +43,8 @@ NONE			=	\033[0m
 all: makelibs 
 	@$(MAKE) $(SERVER_NAME)
 	@$(MAKE) $(CLIENT_NAME)
+
+bonus: all
 
 makelibs:
 	@make -C $(LIBFT_DIR) all
@@ -77,4 +79,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: makelibs all clean fclean re
+.PHONY: makelibs bonus all clean fclean re
